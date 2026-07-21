@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Sitemap location (update path if you move it)
+Sitemap: https://jdools.com/sitemap.xml
+
+# Disallow API paths from indexing
+Disallow: /api/

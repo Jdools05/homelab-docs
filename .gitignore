@@ -1,0 +1,25 @@
+# Secrets and sensitive data
+*.key
+*.pem
+.env
+.env.local
+secrets/
+
+# Large binary files
+*.zip
+*.tar.gz
+*.exe
+*.msi
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Raw operational data (unsanitized) - not for public sharing
+_raw-data/

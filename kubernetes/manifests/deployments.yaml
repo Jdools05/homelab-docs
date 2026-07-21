@@ -1,0 +1,609 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"aoa-marching-cubes"},"name":"aoa-marching-cubes","namespace":"default"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"aoa-marching-cubes"}},"template":{"metadata":{"labels":{"app":"aoa-marching-cubes"}},"spec":{"containers":[{"env":[{"name":"PORT","value":"5000"},{"name":"MRI_DATA_ROOT","value":"/app/mri-data/dataset/Nifti"},{"name":"WEB_CONCURRENCY","value":"1"},{"name":"WEB_TIMEOUT","value":"180"}],"image":"jdools05/aoa-marching-cubes:latest","imagePullPolicy":"Always","livenessProbe":{"httpGet":{"path":"/health","port":"http"},"initialDelaySeconds":20,"periodSeconds":20,"timeoutSeconds":2},"name":"web","ports":[{"containerPort":5000,"name":"http"}],"readinessProbe":{"httpGet":{"path":"/health","port":"http"},"initialDelaySeconds":5,"periodSeconds":10,"timeoutSeconds":2},"resources":{"limits":{"cpu":"1","memory":"2Gi"},"requests":{"cpu":"250m","memory":"512Mi"}}}],"securityContext":{"fsGroup":10001,"runAsGroup":10001,"runAsNonRoot":true,"runAsUser":10001}}}}}
+    creationTimestamp: "2026-04-27T18:27:56Z"
+    generation: 1
+    labels:
+      app: aoa-marching-cubes
+    name: aoa-marching-cubes
+    namespace: default
+    resourceVersion: "13968042"
+    uid: 7aaac7f5-7af5-440e-9ca6-7f68bd61c85e
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: aoa-marching-cubes
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        labels:
+          app: aoa-marching-cubes
+      spec:
+        containers:
+        - env:
+          - name: PORT
+            value: "5000"
+          - name: MRI_DATA_ROOT
+            value: /app/mri-data/dataset/Nifti
+          - name: WEB_CONCURRENCY
+            value: "1"
+          - name: WEB_TIMEOUT
+            value: "180"
+          image: jdools05/aoa-marching-cubes:latest
+          imagePullPolicy: Always
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health
+              port: http
+              scheme: HTTP
+            initialDelaySeconds: 20
+            periodSeconds: 20
+            successThreshold: 1
+            timeoutSeconds: 2
+          name: web
+          ports:
+          - containerPort: 5000
+            name: http
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health
+              port: http
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 2
+          resources:
+            limits:
+              cpu: "1"
+              memory: 2Gi
+            requests:
+              cpu: 250m
+              memory: 512Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          fsGroup: 10001
+          runAsGroup: 10001
+          runAsNonRoot: true
+          runAsUser: 10001
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-04-27T18:27:56Z"
+      lastUpdateTime: "2026-04-27T18:30:26Z"
+      message: ReplicaSet "aoa-marching-cubes-cd7d47b9b" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-07-18T04:02:21Z"
+      lastUpdateTime: "2026-07-18T04:02:21Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "2"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"dynamic-404","namespace":"default"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"dynamic-404"}},"template":{"metadata":{"labels":{"app":"dynamic-404"}},"spec":{"containers":[{"args":["-u","-c","from http.server import BaseHTTPRequestHandler, HTTPServer\nimport os\n\nclass Handler(BaseHTTPRequestHandler):\n    def do_GET(self):\n        host = self.headers.get('Host', 'unknown')\n        self.send_response(404)\n        self.send_header('Content-type', 'text/html')\n        self.end_headers()\n        self.wfile.write(f\"\"\"\n\u003c!DOCTYPE html\u003e\n\u003chtml lang=\"en\"\u003e\n\u003chead\u003e\n    \u003cmeta charset=\"UTF-8\"\u003e\n    \u003cmeta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"\u003e\n    \u003ctitle\u003e404 - Not Found\u003c/title\u003e\n    \u003cstyle\u003e\n        :root {{\n            --primary: #6366f1;\n            --bg-dark: #0f172a;\n            --glass: rgba(255, 255, 255, 0.05);\n        }}\n        * {{ margin: 0; padding: 0; box-sizing: border-box; }}\n        body {{\n            font-family: 'Inter', -apple-system, system-ui, sans-serif;\n            background: var(--bg-dark);\n            color: white;\n            height: 100vh;\n            display: flex;\n            align-items: center;\n            justify-content: center;\n            overflow: hidden;\n        }}\n        .aurora {{\n            position: fixed;\n            top: 0; left: 0; right: 0; bottom: 0;\n            z-index: -1;\n            background: \n                radial-gradient(circle at 20% 20%, #4338ca 0%, transparent 40%),\n                radial-gradient(circle at 80% 80%, #9333ea 0%, transparent 40%),\n                radial-gradient(circle at 50% 50%, #0f172a 0%, transparent 100%);\n            filter: blur(100px);\n            animation: aurora-flow 20s ease-in-out infinite alternate;\n        }}\n        @keyframes aurora-flow {{\n            0% {{ transform: scale(1) translate(0, 0); }}\n            100% {{ transform: scale(1.1) translate(20px, 20px); }}\n        }}\n        .card {{\n            background: var(--glass);\n            backdrop-filter: blur(20px);\n            border: 1px solid rgba(255, 255, 255, 0.1);\n            padding: 3rem;\n            border-radius: 2rem;\n            text-align: center;\n            max-width: 500px;\n            width: 90%;\n            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);\n        }}\n        h1 {{ font-size: 6rem; font-weight: 900; background: linear-gradient(to bottom right, #fff, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1; }}\n        .oops {{ font-size: 1.5rem; font-weight: 600; margin: 1rem 0; color: #e2e8f0; }}\n        p {{ color: #94a3b8; line-height: 1.6; margin-bottom: 2rem; }}\n        .host {{ background: rgba(99, 102, 241, 0.2); color: #818cf8; padding: 0.2rem 0.6rem; border-radius: 0.5rem; font-family: monospace; border: 1px solid rgba(99, 102, 241, 0.3); }}\n        .btn {{ display: inline-block; background: white; color: var(--bg-dark); padding: 0.8rem 2rem; border-radius: 1rem; text-decoration: none; font-weight: 700; transition: transform 0.2s, background 0.2s; }}\n        .btn:hover {{ transform: translateY(-2px); background: #f1f5f9; }}\n    \u003c/style\u003e\n\u003c/head\u003e\n\u003cbody\u003e\n    \u003cdiv class=\"aurora\"\u003e\u003c/div\u003e\n    \u003cdiv class=\"card\"\u003e\n        \u003ch1\u003e404\u003c/h1\u003e\n        \u003cdiv class=\"oops\"\u003eRoute Not Found\u003c/div\u003e\n        \u003cp\u003eIt seems like \u003cspan class=\"host\"\u003e{host}\u003c/span\u003e isn't mapped to a service yet.\u003c/p\u003e\n        \u003ca href=\"https://jdools.com\" class=\"btn\"\u003eReturn Home\u003c/a\u003e\n    \u003c/div\u003e\n\u003c/body\u003e\n\u003c/html\u003e\n\"\"\".encode('utf-8'))\n\nserver = HTTPServer(('0.0.0.0', 8080), Handler)\nprint(\"Dynamic 404 server running on port 8080\")\nserver.serve_forever()\n"],"command":["python"],"image":"python:3.12-alpine","name":"python-404","ports":[{"containerPort":8080}]}]}}}}
+    creationTimestamp: "2026-03-16T01:25:03Z"
+    generation: 2
+    name: dynamic-404
+    namespace: default
+    resourceVersion: "13967488"
+    uid: 11a6449b-0da2-4fc2-8a11-2fa459124af0
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: dynamic-404
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        labels:
+          app: dynamic-404
+      spec:
+        containers:
+        - args:
+          - -u
+          - -c
+          - "from http.server import BaseHTTPRequestHandler, HTTPServer\nimport os\n\nclass
+            Handler(BaseHTTPRequestHandler):\n    def do_GET(self):\n        host
+            = self.headers.get('Host', 'unknown')\n        self.send_response(404)\n
+            \       self.send_header('Content-type', 'text/html')\n        self.end_headers()\n
+            \       self.wfile.write(f\"\"\"\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n
+            \   <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width,
+            initial-scale=1.0\">\n    <title>404 - Not Found</title>\n    <style>\n
+            \       :root {{\n            --primary: #6366f1;\n            --bg-dark:
+            #0f172a;\n            --glass: rgba(255, 255, 255, 0.05);\n        }}\n
+            \       * {{ margin: 0; padding: 0; box-sizing: border-box; }}\n        body
+            {{\n            font-family: 'Inter', -apple-system, system-ui, sans-serif;\n
+            \           background: var(--bg-dark);\n            color: white;\n            height:
+            100vh;\n            display: flex;\n            align-items: center;\n
+            \           justify-content: center;\n            overflow: hidden;\n
+            \       }}\n        .aurora {{\n            position: fixed;\n            top:
+            0; left: 0; right: 0; bottom: 0;\n            z-index: -1;\n            background:
+            \n                radial-gradient(circle at 20% 20%, #4338ca 0%, transparent
+            40%),\n                radial-gradient(circle at 80% 80%, #9333ea 0%,
+            transparent 40%),\n                radial-gradient(circle at 50% 50%,
+            #0f172a 0%, transparent 100%);\n            filter: blur(100px);\n            animation:
+            aurora-flow 20s ease-in-out infinite alternate;\n        }}\n        @keyframes
+            aurora-flow {{\n            0% {{ transform: scale(1) translate(0, 0);
+            }}\n            100% {{ transform: scale(1.1) translate(20px, 20px); }}\n
+            \       }}\n        .card {{\n            background: var(--glass);\n
+            \           backdrop-filter: blur(20px);\n            border: 1px solid
+            rgba(255, 255, 255, 0.1);\n            padding: 3rem;\n            border-radius:
+            2rem;\n            text-align: center;\n            max-width: 500px;\n
+            \           width: 90%;\n            box-shadow: 0 25px 50px -12px rgba(0,
+            0, 0, 0.5);\n        }}\n        h1 {{ font-size: 6rem; font-weight: 900;
+            background: linear-gradient(to bottom right, #fff, #94a3b8); -webkit-background-clip:
+            text; -webkit-text-fill-color: transparent; line-height: 1; }}\n        .oops
+            {{ font-size: 1.5rem; font-weight: 600; margin: 1rem 0; color: #e2e8f0;
+            }}\n        p {{ color: #94a3b8; line-height: 1.6; margin-bottom: 2rem;
+            }}\n        .host {{ background: rgba(99, 102, 241, 0.2); color: #818cf8;
+            padding: 0.2rem 0.6rem; border-radius: 0.5rem; font-family: monospace;
+            border: 1px solid rgba(99, 102, 241, 0.3); }}\n        .btn {{ display:
+            inline-block; background: white; color: var(--bg-dark); padding: 0.8rem
+            2rem; border-radius: 1rem; text-decoration: none; font-weight: 700; transition:
+            transform 0.2s, background 0.2s; }}\n        .btn:hover {{ transform:
+            translateY(-2px); background: #f1f5f9; }}\n    </style>\n</head>\n<body>\n
+            \   <div class=\"aurora\"></div>\n    <div class=\"card\">\n        <h1>404</h1>\n
+            \       <div class=\"oops\">Route Not Found</div>\n        <p>It seems
+            like <span class=\"host\">{host}</span> isn't mapped to a service yet.</p>\n
+            \       <a href=\"https://jdools.com\" class=\"btn\">Return Home</a>\n
+            \   </div>\n</body>\n</html>\n\"\"\".encode('utf-8'))\n\nserver = HTTPServer(('0.0.0.0',
+            8080), Handler)\nprint(\"Dynamic 404 server running on port 8080\")\nserver.serve_forever()\n"
+          command:
+          - python
+          image: python:3.12-alpine
+          imagePullPolicy: IfNotPresent
+          name: python-404
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-03-16T01:25:03Z"
+      lastUpdateTime: "2026-03-16T03:57:27Z"
+      message: ReplicaSet "dynamic-404-7f6b4dc996" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-07-18T04:01:32Z"
+      lastUpdateTime: "2026-07-18T04:01:32Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 2
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "16"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"landing-page","namespace":"default"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"landing-page"}},"template":{"metadata":{"labels":{"app":"landing-page"}},"spec":{"containers":[{"image":"nginx:alpine","name":"nginx","ports":[{"containerPort":80}],"volumeMounts":[{"mountPath":"/usr/share/nginx/html","name":"html-volume"}]}],"volumes":[{"configMap":{"name":"landing-page-html"},"name":"html-volume"}]}}}}
+    creationTimestamp: "2026-03-23T21:17:08Z"
+    generation: 16
+    name: landing-page
+    namespace: default
+    resourceVersion: "13967355"
+    uid: cee3f084-5f3d-414f-ad70-36cf245caf20
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: landing-page
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2026-07-14T10:13:01-05:00"
+        labels:
+          app: landing-page
+      spec:
+        containers:
+        - image: nginx:alpine
+          imagePullPolicy: IfNotPresent
+          name: nginx
+          ports:
+          - containerPort: 80
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /usr/share/nginx/html
+            name: html-volume
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: landing-page-html
+          name: html-volume
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-03-23T21:17:08Z"
+      lastUpdateTime: "2026-07-14T15:13:04Z"
+      message: ReplicaSet "landing-page-79657f5b9f" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-07-18T04:01:15Z"
+      lastUpdateTime: "2026-07-18T04:01:15Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 16
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "12"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"mock-trading","namespace":"default"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"mock-trading"}},"template":{"metadata":{"labels":{"app":"mock-trading"}},"spec":{"containers":[{"image":"jdools05/mock-trading:72b1901","imagePullPolicy":"Always","livenessProbe":{"httpGet":{"path":"/health","port":80},"initialDelaySeconds":15,"periodSeconds":20},"name":"web","ports":[{"containerPort":80}],"readinessProbe":{"httpGet":{"path":"/health","port":80},"initialDelaySeconds":5,"periodSeconds":10}}]}}}}
+    creationTimestamp: "2026-06-01T00:38:59Z"
+    generation: 13
+    name: mock-trading
+    namespace: default
+    resourceVersion: "13967982"
+    uid: 595f0bfe-0d21-4552-9d48-aedd7ceb1fe7
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: mock-trading
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2026-06-06T00:13:07Z"
+        labels:
+          app: mock-trading
+      spec:
+        containers:
+        - image: jdools05/mock-trading:72b1901
+          imagePullPolicy: Always
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health
+              port: 80
+              scheme: HTTP
+            initialDelaySeconds: 15
+            periodSeconds: 20
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: web
+          ports:
+          - containerPort: 80
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health
+              port: 80
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-06-01T01:03:15Z"
+      lastUpdateTime: "2026-06-06T00:13:22Z"
+      message: ReplicaSet "mock-trading-858844756" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-07-18T04:02:12Z"
+      lastUpdateTime: "2026-07-18T04:02:12Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 13
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "25"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"power-playlist-api","namespace":"default"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"power-playlist-api"}},"template":{"metadata":{"labels":{"app":"power-playlist-api"}},"spec":{"containers":[{"env":[{"name":"DATABASE_URL","valueFrom":{"secretKeyRef":{"key":"database-url","name":"power-playlist-db-secret"}}},{"name":"SESSION_SECRET","valueFrom":{"secretKeyRef":{"key":"session-secret","name":"power-playlist-api-secret"}}},{"name":"GOOGLE_CLIENT_ID","valueFrom":{"secretKeyRef":{"key":"google-client-id","name":"power-playlist-api-secret"}}},{"name":"GOOGLE_CLIENT_SECRET","valueFrom":{"secretKeyRef":{"key":"google-client-secret","name":"power-playlist-api-secret"}}},{"name":"SPOTIFY_CLIENT_ID","valueFrom":{"secretKeyRef":{"key":"spotify-client-id","name":"power-playlist-api-secret"}}},{"name":"SPOTIFY_CLIENT_SECRET","valueFrom":{"secretKeyRef":{"key":"spotify-client-secret","name":"power-playlist-api-secret"}}},{"name":"SPOTIFY_REDIRECT_URI","valueFrom":{"configMapKeyRef":{"key":"SPOTIFY_REDIRECT_URI","name":"power-playlist-api-config"}}},{"name":"VITE_API_BASE_URL","valueFrom":{"configMapKeyRef":{"key":"VITE_API_BASE_URL","name":"power-playlist-api-config"}}},{"name":"VITE_FRONTEND_BASE_URL","valueFrom":{"configMapKeyRef":{"key":"VITE_FRONTEND_BASE_URL","name":"power-playlist-api-config"}}},{"name":"VITE_IS_PRODUCTION","valueFrom":{"configMapKeyRef":{"key":"VITE_IS_PRODUCTION","name":"power-playlist-api-config"}}},{"name":"PORT","value":"3000"},{"name":"HOST","value":"0.0.0.0"}],"image":"jdools05/power-playlist-api:latest","livenessProbe":{"httpGet":{"path":"/health","port":3000},"initialDelaySeconds":15,"periodSeconds":20},"name":"api","ports":[{"containerPort":3000}],"readinessProbe":{"httpGet":{"path":"/health","port":3000},"initialDelaySeconds":5,"periodSeconds":10}}]}}}}
+    creationTimestamp: "2026-03-21T23:18:56Z"
+    generation: 25
+    name: power-playlist-api
+    namespace: default
+    resourceVersion: "13968054"
+    uid: ac520363-27cd-4db8-89c6-4f6a3393f732
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: power-playlist-api
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2026-05-24T16:56:44Z"
+        labels:
+          app: power-playlist-api
+      spec:
+        containers:
+        - env:
+          - name: DATABASE_URL
+            valueFrom:
+              secretKeyRef:
+                key: database-url
+                name: power-playlist-db-secret
+          - name: SESSION_SECRET
+            valueFrom:
+              secretKeyRef:
+                key: session-secret
+                name: power-playlist-api-secret
+          - name: GOOGLE_CLIENT_ID
+            valueFrom:
+              secretKeyRef:
+                key: google-client-id
+                name: power-playlist-api-secret
+          - name: GOOGLE_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                key: google-client-secret
+                name: power-playlist-api-secret
+          - name: SPOTIFY_CLIENT_ID
+            valueFrom:
+              secretKeyRef:
+                key: spotify-client-id
+                name: power-playlist-api-secret
+          - name: SPOTIFY_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                key: spotify-client-secret
+                name: power-playlist-api-secret
+          - name: SPOTIFY_REDIRECT_URI
+            valueFrom:
+              configMapKeyRef:
+                key: SPOTIFY_REDIRECT_URI
+                name: power-playlist-api-config
+          - name: VITE_API_BASE_URL
+            valueFrom:
+              configMapKeyRef:
+                key: VITE_API_BASE_URL
+                name: power-playlist-api-config
+          - name: VITE_FRONTEND_BASE_URL
+            valueFrom:
+              configMapKeyRef:
+                key: VITE_FRONTEND_BASE_URL
+                name: power-playlist-api-config
+          - name: VITE_IS_PRODUCTION
+            valueFrom:
+              configMapKeyRef:
+                key: VITE_IS_PRODUCTION
+                name: power-playlist-api-config
+          - name: PORT
+            value: "3000"
+          - name: HOST
+            value: 0.0.0.0
+          image: jdools05/power-playlist-api:latest
+          imagePullPolicy: Always
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health
+              port: 3000
+              scheme: HTTP
+            initialDelaySeconds: 15
+            periodSeconds: 20
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: api
+          ports:
+          - containerPort: 3000
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health
+              port: 3000
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-05-24T20:10:30Z"
+      lastUpdateTime: "2026-05-24T20:10:30Z"
+      message: ReplicaSet "power-playlist-api-68fdcf8b57" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-07-18T04:02:26Z"
+      lastUpdateTime: "2026-07-18T04:02:26Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 25
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "19"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{"deployment.kubernetes.io/revision":"3"},"creationTimestamp":"2026-03-21T23:19:16Z","generation":3,"name":"power-playlist-web","namespace":"default","resourceVersion":"932258","uid":"469a71a8-a126-46c5-b16d-2586105aa1c2"},"spec":{"progressDeadlineSeconds":600,"replicas":1,"revisionHistoryLimit":10,"selector":{"matchLabels":{"app":"power-playlist-web"}},"strategy":{"rollingUpdate":{"maxSurge":"25%","maxUnavailable":"25%"},"type":"RollingUpdate"},"template":{"metadata":{"annotations":{"kubectl.kubernetes.io/restartedAt":"2026-03-23T19:59:43-06:00"},"labels":{"app":"power-playlist-web"}},"spec":{"containers":[{"env":[{"name":"VITE_API_BASE_URL","valueFrom":{"configMapKeyRef":{"key":"VITE_API_BASE_URL","name":"power-playlist-api-config"}}},{"name":"VITE_FRONTEND_BASE_URL","valueFrom":{"configMapKeyRef":{"key":"VITE_FRONTEND_BASE_URL","name":"power-playlist-api-config"}}},{"name":"VITE_IS_PRODUCTION","valueFrom":{"configMapKeyRef":{"key":"VITE_IS_PRODUCTION","name":"power-playlist-api-config"}}}],"image":"jdools05/power-playlist-web:latest","imagePullPolicy":"Always","name":"web","ports":[{"containerPort":80,"protocol":"TCP"}],"resources":{},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File"}],"dnsPolicy":"ClusterFirst","restartPolicy":"Always","schedulerName":"default-scheduler","securityContext":{},"terminationGracePeriodSeconds":30}}},"status":{"availableReplicas":1,"conditions":[{"lastTransitionTime":"2026-03-21T23:19:27Z","lastUpdateTime":"2026-03-21T23:19:27Z","message":"Deployment has minimum availability.","reason":"MinimumReplicasAvailable","status":"True","type":"Available"},{"lastTransitionTime":"2026-03-21T23:19:16Z","lastUpdateTime":"2026-03-24T01:59:47Z","message":"ReplicaSet \"power-playlist-web-654b6d6db6\" has successfully progressed.","reason":"NewReplicaSetAvailable","status":"True","type":"Progressing"}],"observedGeneration":3,"readyReplicas":1,"replicas":1,"updatedReplicas":1}}
+    creationTimestamp: "2026-03-21T23:19:16Z"
+    generation: 19
+    name: power-playlist-web
+    namespace: default
+    resourceVersion: "13967780"
+    uid: 469a71a8-a126-46c5-b16d-2586105aa1c2
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: power-playlist-web
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2026-05-23T21:50:16Z"
+        labels:
+          app: power-playlist-web
+      spec:
+        containers:
+        - env:
+          - name: VITE_API_BASE_URL
+            valueFrom:
+              configMapKeyRef:
+                key: VITE_API_BASE_URL
+                name: power-playlist-api-config
+          - name: VITE_FRONTEND_BASE_URL
+            valueFrom:
+              configMapKeyRef:
+                key: VITE_FRONTEND_BASE_URL
+                name: power-playlist-api-config
+          - name: VITE_IS_PRODUCTION
+            valueFrom:
+              configMapKeyRef:
+                key: VITE_IS_PRODUCTION
+                name: power-playlist-api-config
+          image: jdools05/power-playlist-web:latest
+          imagePullPolicy: Always
+          name: web
+          ports:
+          - containerPort: 80
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-03-21T23:19:16Z"
+      lastUpdateTime: "2026-05-23T21:50:19Z"
+      message: ReplicaSet "power-playlist-web-56b59b7f97" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2026-07-18T04:01:55Z"
+      lastUpdateTime: "2026-07-18T04:01:55Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 19
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+kind: List
+metadata:
+  resourceVersion: ""
