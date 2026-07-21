@@ -1,0 +1,192 @@
+apiVersion: v1
+items:
+- apiVersion: networking.k8s.io/v1
+  kind: Ingress
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"networking.k8s.io/v1","kind":"Ingress","metadata":{"annotations":{"traefik.ingress.kubernetes.io/router.entrypoints":"web,websecure","traefik.ingress.kubernetes.io/router.priority":"100"},"labels":{"app":"aoa-marching-cubes"},"name":"aoa-marching-cubes-ingress","namespace":"default"},"spec":{"ingressClassName":"traefik","rules":[{"host":"aoa-marching-cubes.jdools.com","http":{"paths":[{"backend":{"service":{"name":"aoa-marching-cubes","port":{"number":80}}},"path":"/","pathType":"Prefix"}]}}]}}
+      traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
+      traefik.ingress.kubernetes.io/router.priority: "100"
+    creationTimestamp: "2026-04-27T18:27:56Z"
+    generation: 1
+    labels:
+      app: aoa-marching-cubes
+    name: aoa-marching-cubes-ingress
+    namespace: default
+    resourceVersion: "14359696"
+    uid: a339df0f-f01e-46a3-9c85-e0020d44cc4c
+  spec:
+    ingressClassName: traefik
+    rules:
+    - host: aoa-marching-cubes.jdools.com
+      http:
+        paths:
+        - backend:
+            service:
+              name: aoa-marching-cubes
+              port:
+                number: 80
+          path: /
+          pathType: Prefix
+  status:
+    loadBalancer:
+      ingress:
+      - ip: 10.10.30.100
+- apiVersion: networking.k8s.io/v1
+  kind: Ingress
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"networking.k8s.io/v1","kind":"Ingress","metadata":{"annotations":{"traefik.ingress.kubernetes.io/router.middlewares":"default-error-pages@kubernetescrd"},"name":"catchall-404","namespace":"default"},"spec":{"ingressClassName":"traefik","rules":[{"host":"*.jdools.com","http":{"paths":[{"backend":{"service":{"name":"dynamic-404","port":{"number":80}}},"path":"/","pathType":"Prefix"}]}}]}}
+      traefik.ingress.kubernetes.io/router.middlewares: default-error-pages@kubernetescrd
+    creationTimestamp: "2026-03-16T03:25:25Z"
+    generation: 1
+    name: catchall-404
+    namespace: default
+    resourceVersion: "14359700"
+    uid: 6f059ee7-bb9c-4a90-9bb7-9b67236669e2
+  spec:
+    ingressClassName: traefik
+    rules:
+    - host: '*.jdools.com'
+      http:
+        paths:
+        - backend:
+            service:
+              name: dynamic-404
+              port:
+                number: 80
+          path: /
+          pathType: Prefix
+  status:
+    loadBalancer:
+      ingress:
+      - ip: 10.10.30.100
+- apiVersion: networking.k8s.io/v1
+  kind: Ingress
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"networking.k8s.io/v1","kind":"Ingress","metadata":{"annotations":{"traefik.ingress.kubernetes.io/router.middlewares":"default-error-pages@kubernetescrd"},"name":"jdools-com-ingress","namespace":"default"},"spec":{"ingressClassName":"traefik","rules":[{"host":"jdools.com","http":{"paths":[{"backend":{"service":{"name":"landing-page","port":{"number":80}}},"path":"/","pathType":"Prefix"}]}}]}}
+      traefik.ingress.kubernetes.io/router.middlewares: default-error-pages@kubernetescrd
+    creationTimestamp: "2026-03-23T21:17:08Z"
+    generation: 1
+    name: jdools-com-ingress
+    namespace: default
+    resourceVersion: "14311354"
+    uid: a399f60d-6bc2-4623-b8be-8d29922b26e5
+  spec:
+    ingressClassName: traefik
+    rules:
+    - host: jdools.com
+      http:
+        paths:
+        - backend:
+            service:
+              name: landing-page
+              port:
+                number: 80
+          path: /
+          pathType: Prefix
+  status:
+    loadBalancer:
+      ingress:
+      - ip: 10.10.30.100
+- apiVersion: networking.k8s.io/v1
+  kind: Ingress
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"networking.k8s.io/v1","kind":"Ingress","metadata":{"annotations":{"kubernetes.io/ingress.class":"traefik","traefik.ingress.kubernetes.io/router.entrypoints":"web,websecure","traefik.ingress.kubernetes.io/router.priority":"100"},"name":"mock-trading-ingress","namespace":"default"},"spec":{"ingressClassName":"traefik","rules":[{"host":"mock-trading.jdools.com","http":{"paths":[{"backend":{"service":{"name":"mock-trading","port":{"number":80}}},"path":"/","pathType":"Prefix"}]}}]}}
+      kubernetes.io/ingress.class: traefik
+      traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
+      traefik.ingress.kubernetes.io/router.priority: "100"
+    creationTimestamp: "2026-06-01T00:38:59Z"
+    generation: 1
+    name: mock-trading-ingress
+    namespace: default
+    resourceVersion: "14311357"
+    uid: 0eac5d40-a356-4133-baab-9bde48a6a633
+  spec:
+    ingressClassName: traefik
+    rules:
+    - host: mock-trading.jdools.com
+      http:
+        paths:
+        - backend:
+            service:
+              name: mock-trading
+              port:
+                number: 80
+          path: /
+          pathType: Prefix
+  status:
+    loadBalancer:
+      ingress:
+      - ip: 10.10.30.100
+- apiVersion: networking.k8s.io/v1
+  kind: Ingress
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"networking.k8s.io/v1","kind":"Ingress","metadata":{"annotations":{"traefik.ingress.kubernetes.io/router.entrypoints":"web,websecure","traefik.ingress.kubernetes.io/router.priority":"200"},"name":"power-playlist-api-ingress","namespace":"default"},"spec":{"ingressClassName":"traefik","rules":[{"host":"power-playlist.jdools.com","http":{"paths":[{"backend":{"service":{"name":"power-playlist-api","port":{"number":3000}}},"path":"/api","pathType":"Prefix"}]}}]}}
+      traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
+      traefik.ingress.kubernetes.io/router.priority: "200"
+    creationTimestamp: "2026-03-25T01:19:01Z"
+    generation: 1
+    name: power-playlist-api-ingress
+    namespace: default
+    resourceVersion: "14214498"
+    uid: 565e3505-d4be-465d-a12e-e7f9b4b432e1
+  spec:
+    ingressClassName: traefik
+    rules:
+    - host: power-playlist.jdools.com
+      http:
+        paths:
+        - backend:
+            service:
+              name: power-playlist-api
+              port:
+                number: 3000
+          path: /api
+          pathType: Prefix
+  status:
+    loadBalancer:
+      ingress:
+      - ip: 10.10.30.100
+- apiVersion: networking.k8s.io/v1
+  kind: Ingress
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"networking.k8s.io/v1","kind":"Ingress","metadata":{"annotations":{"traefik.ingress.kubernetes.io/router.entrypoints":"web,websecure","traefik.ingress.kubernetes.io/router.priority":"100"},"name":"power-playlist-web-ingress","namespace":"default"},"spec":{"ingressClassName":"traefik","rules":[{"host":"power-playlist.jdools.com","http":{"paths":[{"backend":{"service":{"name":"power-playlist-web","port":{"number":80}}},"path":"/","pathType":"Prefix"}]}}]}}
+      traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
+      traefik.ingress.kubernetes.io/router.priority: "100"
+    creationTimestamp: "2026-03-25T01:19:01Z"
+    generation: 1
+    name: power-playlist-web-ingress
+    namespace: default
+    resourceVersion: "13735236"
+    uid: 7b385aeb-d498-4f2e-89f1-465d71aa55c6
+  spec:
+    ingressClassName: traefik
+    rules:
+    - host: power-playlist.jdools.com
+      http:
+        paths:
+        - backend:
+            service:
+              name: power-playlist-web
+              port:
+                number: 80
+          path: /
+          pathType: Prefix
+  status:
+    loadBalancer:
+      ingress:
+      - ip: 10.10.30.100
+kind: List
+metadata:
+  resourceVersion: ""

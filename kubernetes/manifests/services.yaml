@@ -1,0 +1,210 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"app":"aoa-marching-cubes"},"name":"aoa-marching-cubes","namespace":"default"},"spec":{"ports":[{"name":"http","port":80,"targetPort":"http"}],"selector":{"app":"aoa-marching-cubes"},"type":"ClusterIP"}}
+    creationTimestamp: "2026-04-27T18:27:56Z"
+    labels:
+      app: aoa-marching-cubes
+    name: aoa-marching-cubes
+    namespace: default
+    resourceVersion: "4929012"
+    uid: ffdf87c1-d6c7-4a21-878b-f8c0a3d72751
+  spec:
+    clusterIP: 10.43.238.152
+    clusterIPs:
+    - 10.43.238.152
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: http
+    selector:
+      app: aoa-marching-cubes
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"creationTimestamp":"2026-03-11T20:28:20Z","name":"dynamic-404","namespace":"default","resourceVersion":"515755","uid":"5c9c4909-30a3-4ee5-a091-cf61ac7cd4cd"},"spec":{"clusterIP":"10.43.85.199","clusterIPs":["10.43.85.199"],"internalTrafficPolicy":"Cluster","ipFamilies":["IPv4"],"ipFamilyPolicy":"SingleStack","ports":[{"port":80,"protocol":"TCP","targetPort":8080}],"selector":{"app":"dynamic-404"},"sessionAffinity":"None","type":"ClusterIP"},"status":{"loadBalancer":{}}}
+    creationTimestamp: "2026-03-16T01:24:48Z"
+    name: dynamic-404
+    namespace: default
+    resourceVersion: "1066"
+    uid: 403fe61c-4a0f-43f1-bf34-a0837690b156
+  spec:
+    clusterIP: 10.43.85.199
+    clusterIPs:
+    - 10.43.85.199
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      app: dynamic-404
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2026-03-16T01:17:25Z"
+    labels:
+      component: apiserver
+      provider: kubernetes
+    name: kubernetes
+    namespace: default
+    resourceVersion: "50"
+    uid: a95609d7-5035-4174-adac-02fa5b99e8a7
+  spec:
+    clusterIP: 10.43.0.1
+    clusterIPs:
+    - 10.43.0.1
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: https
+      port: 443
+      protocol: TCP
+      targetPort: 6443
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"landing-page","namespace":"default"},"spec":{"ports":[{"port":80,"protocol":"TCP","targetPort":80}],"selector":{"app":"landing-page"}}}
+    creationTimestamp: "2026-03-23T21:17:08Z"
+    name: landing-page
+    namespace: default
+    resourceVersion: "908788"
+    uid: 6fcc6e1e-6e5b-4822-ba1a-e64737f10654
+  spec:
+    clusterIP: 10.43.233.162
+    clusterIPs:
+    - 10.43.233.162
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+    selector:
+      app: landing-page
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"mock-trading","namespace":"default"},"spec":{"ports":[{"port":80,"protocol":"TCP","targetPort":80}],"selector":{"app":"mock-trading"}}}
+    creationTimestamp: "2026-06-01T00:38:59Z"
+    name: mock-trading
+    namespace: default
+    resourceVersion: "8693047"
+    uid: 9d6709ca-e914-439c-9fdc-a728041d55b4
+  spec:
+    clusterIP: 10.43.51.93
+    clusterIPs:
+    - 10.43.51.93
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+    selector:
+      app: mock-trading
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"power-playlist-api","namespace":"default"},"spec":{"ports":[{"port":3000,"targetPort":3000}],"selector":{"app":"power-playlist-api"}}}
+    creationTimestamp: "2026-03-21T23:18:56Z"
+    name: power-playlist-api
+    namespace: default
+    resourceVersion: "691330"
+    uid: 830ae8ab-76fe-4efb-9877-5d3a3bf63a90
+  spec:
+    clusterIP: 10.43.145.103
+    clusterIPs:
+    - 10.43.145.103
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - port: 3000
+      protocol: TCP
+      targetPort: 3000
+    selector:
+      app: power-playlist-api
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"power-playlist-web","namespace":"default"},"spec":{"ports":[{"port":80,"targetPort":80}],"selector":{"app":"power-playlist-web"}}}
+    creationTimestamp: "2026-03-21T23:19:16Z"
+    name: power-playlist-web
+    namespace: default
+    resourceVersion: "691376"
+    uid: 3242d121-788b-4618-af8c-2335bbe17302
+  spec:
+    clusterIP: 10.43.172.193
+    clusterIPs:
+    - 10.43.172.193
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+    selector:
+      app: power-playlist-web
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+kind: List
+metadata:
+  resourceVersion: ""
