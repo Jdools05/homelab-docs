@@ -41,7 +41,3 @@ All websites are exposed via Traefik ingress controller with the following routi
 | `jdools.com` | `/` | landing-page:80 |
 | `mock-trading.jdools.com` | `/` | mock-trading:80 |
 | `*.jdools.com` (wildcard) | `/` | dynamic-404:80 (catch-all) |
-
-## Security Notice
-
-All documentation in this repository has been sanitized for public viewing. Specific internal IPs, service addresses, and deployment credentials have been generalized or omitted. The `_raw-data/` directory contains unsanitized operational data for reference only.

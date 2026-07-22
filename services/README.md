@@ -30,8 +30,3 @@ This directory contains detailed documentation for each service running on the h
 └─────────────────────────────────────────────────────────────┘
 
 All services exposed via Traefik ingress controller on jdools.com domains.
-```
-
-## Security Notice
-
-All documentation in this repository has been sanitized for public viewing. Specific API endpoints, database credentials, and internal service configurations have been generalized or omitted. The `_raw-data/` directory contains unsanitized operational data for reference only.

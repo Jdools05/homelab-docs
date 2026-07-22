@@ -33,7 +33,3 @@ All external services are exposed via Traefik ingress controller with the follow
 | `mock-trading.jdools.com` | Mock Trading App (React Native web build) | SPA served by NGINX |
 | `power-playlist.jdools.com` | Power Playlist API + Web | Node.js API + Next.js frontend |
 | `aoa-marching-cubes.jdools.com` | AOA Marching Cubes (Java 3D visualization) | Static web app |
-
-## Security Notice
-
-All documentation in this repository has been sanitized for public viewing. Specific internal IPs, cluster-internal service addresses, and sensitive configuration details have been generalized or omitted. The `_raw-data/kubernetes/` directory contains unsanitized operational data for reference only.

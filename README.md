@@ -8,46 +8,46 @@ Welcome to the homelab infrastructure documentation repository. This project doc
 ┌─────────────────────────────────────────────────────────────┐
 │                    Homelab Network                          │
 │                                                             │
-│  ┌──────────────────┐        ┌──────────────────────────┐  │
-│  │   Internet/ISP    │        │   Internal Networks      │  │
-│  │                   │        │                          │  │
-│  │   WAN (DHCP)     ├───────►│  VLAN 1: Management     │  │
-│  │                  │  LAG   │  VLAN 99: k8s cluster   │  │
-│  └──────────────────┘        │  VLAN 10-40: Services   │  │
-│                              └──────────────────────────┘  │
+│  ┌──────────────────┐        ┌──────────────────────────┐   │
+│  │   Internet/ISP   │        │   Internal Networks      │   │
+│  │                  │        │                          │   │
+│  │   WAN (DHCP)     ├───────►│  Management Network      │   │
+│  │                  │  LAG   │  Kubernetes Cluster      │   │
+│  └──────────────────┘        │  Service Networks        │   │
+│                              └──────────────────────────┘   │
 └─────────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────────┐
 │                    Proxmox VE Host                          │
 │                                                             │
-│  CPU: Intel Xeon E5-2667 v3 (Dual Socket, 16 cores)       │
+│  CPU: Intel Xeon E5-2667 v3 (Dual Socket, 16 cores)         │
 │  RAM: 128 GB DDR4                                           │
-│  Storage: 30TB LVM Thin Pool                               │
-│  Network: 4x 1GbE Bonded (LACP)                            │
+│  Storage: 30TB LVM Thin Pool                                │
+│  Network: 4x 1GbE Bonded (LACP)                             │
 │                                                             │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐       │
-│  │ OPNsense    │  │ k8s Ctrl-1  │  │ k8s Worker-1│       │
-│  │ (Firewall)  │  │ (Control)   │  │             │       │
-│  └─────────────┘  └─────────────┘  └─────────────┘       │
-│  ┌─────────────┐  ┌─────────────┐                        │
-│  │ k8s Worker-2│  │ Nextcloud   │                        │
-│  │             │  │ (Cloud)     │                        │
-│  └─────────────┘  └─────────────┘                        │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐          │
+│  │ OPNsense    │  │ k8s Ctrl-1  │  │ k8s Worker-1│          │
+│  │ (Firewall)  │  │ (Control)   │  │             │          │
+│  └─────────────┘  └─────────────┘  └─────────────┘          │
+│  ┌─────────────┐  ┌─────────────┐                           │
+│  │ k8s Worker-2│  │ Nextcloud   │                           │
+│  │             │  │ (Cloud)     │                           │
+│  └─────────────┘  └─────────────┘                           │
 └─────────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────────┐
 │              Kubernetes Cluster (k3s v1.34.5)               │
 │                                                             │
-│  Node Count: 3 (1 control + 2 workers)                     │
-│  Ingress: Traefik with MetalLB                             │
-│  Storage: Longhorn (distributed block storage)             │
-│  Monitoring: Prometheus Stack                              │
+│  Node Count: 3 (1 control + 2 workers)                      │
+│  Ingress: Traefik with MetalLB                              │
+│  Storage: Longhorn (distributed block storage)              │
+│  Monitoring: Prometheus Stack                               │
 │                                                             │
-│  Services Exposed via Ingress:                             │
-│  ├── jdools.com              → Landing Page               │
-│  ├── mock-trading.jdools.com → React Native App (Web)     │
-│  ├── power-playlist.jdools.com → Spotify Integration      │
-│  └── aoa-marching-cubes.jdools.com → Java 3D Visualization│
+│  Services Exposed via Ingress:                              │
+│  ├── jdools.com              → Landing Page                 │
+│  ├── mock-trading.jdools.com → React Native App (Web)       │
+│  ├── power-playlist.jdools.com → Spotify Integration        │
+│  └── aoa-marching-cubes.jdools.com → Java 3D Visualization  │  
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -80,9 +80,10 @@ Welcome to the homelab infrastructure documentation repository. This project doc
 - **[websites/](./websites/)** - Website assets and deployment docs
 - **[references/](./references/)** - DNS, SSL, security, and changelog
 
-## Security Notice
+## TODO
 
-This repository contains sanitized infrastructure documentation suitable for public viewing. All sensitive data (real IPs, secrets, internal hostnames) has been removed or replaced with placeholders. The `_raw-data/` directory contains unsanitized operational data and is excluded from git.
+- [ ] **VLAN segmentation** — Document and formalize VLAN layout (management, k8s, services) in the network docs
+- [ ] **iSCSI integration** — Get iSCSI working for shared block storage across Proxmox nodes
 
 ---
 
