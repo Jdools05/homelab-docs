@@ -29,6 +29,7 @@
 - **Thin Pool**: MainThin
 - **Usage**: Hosts all VM disk images and container storage
 - **Allocated VMs**: ~40+ virtual disks across multiple VMs
+- **RAID**: `/dev/sda` runs RAID1 while `/dev/sdb` and `/dev/sdc` utilize RAID5 
 
 ### Network Interface Cards (NICs)
 - **Quantity**: 4x Intel Ethernet NICs (dual-port per socket)
@@ -37,16 +38,16 @@
 - **Bridge**: All bonded interfaces bridge to `vmbr0`
 
 ### Form Factor & Chassis
-- **Type**: Rack-mount or Tower server (enterprise-class)
-- **Power Supply**: Likely redundant PSUs (typical for dual-socket Xeon systems)
-- **Management**: IPMI/iLO for out-of-band management
+- **Type**: Rack-mount servers
+- **Power Supply**: A/B redundant PSUs
+- **Management**: Dedicated iDRAC port for remote management
 
 ## Network Switching
 
-- **Switch Type**: Managed LACP-capable switch
+- **Switch Type**: TP-Link T1600G-28TS smart switch
 - **Port Configuration**: 4x ports dedicated to Proxmox host (LAG/bond0)
-- **VLAN Support**: Full VLAN tagging on uplink port(s)
-- **Uplink to OPNsense**: Single or bonded link carrying all VLANs
+- **VLAN Support**: VLAN tagging on uplink port(s) (WIP)
+- **Uplink to OPNsense**: Virtual bridge carrying VM traffic
 
 ## Networking Hardware Summary
 
@@ -55,14 +56,5 @@
 | Host NICs | 4x Intel Ethernet (dual-port) |
 | Bonding | LACP (802.3ad), 4-link aggregation |
 | Switch | Managed switch with VLAN support |
-| Firewall | OPNsense VM on dedicated network interface |
+| Firewall | OPNsense VM |
 
-## Power & Cooling Considerations
-
-- **Power Consumption**: Estimated 300-500W under load (dual Xeon + multiple drives)
-- **Cooling**: Standard server chassis cooling (front-to-back airflow)
-- **UPS Recommended**: Yes, for graceful shutdown capability
-
----
-
-*Hardware documentation sanitized for public viewing. Specific model numbers and identifiers have been generalized.*
