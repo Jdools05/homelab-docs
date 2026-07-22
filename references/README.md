@@ -16,7 +16,3 @@ These reference documents provide:
 2. **Compliance Reference**: Alignment with security standards (CIS Benchmarks, NIST CSF, OWASP Top 10)
 3. **Knowledge Sharing**: Centralized location for infrastructure knowledge accessible to all team members
 4. **Portfolio Showcase**: Demonstrates infrastructure expertise and attention to security best practices
-
-## Security Notice
-
-All documentation in this repository has been sanitized for public viewing. Specific network configurations, IP addresses, internal policies, and sensitive operational details have been generalized or omitted. The `_raw-data/` directory contains unsanitized operational data for reference only.
