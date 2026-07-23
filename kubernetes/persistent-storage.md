@@ -34,7 +34,3 @@ These are the only PVCs currently in use — monitoring data on Longhorn with 2x
 - **Replication**: 2x by default (each volume has 2 copies across different nodes)
 - **Volume expansion**: Supported online via `kubectl patch pvc`
 - **Snapshots**: Create/delete snapshots from the Longhorn UI or CLI
-
----
-
-*Persistent storage documentation. Specific volume sizes and internal configurations have been generalized.*
