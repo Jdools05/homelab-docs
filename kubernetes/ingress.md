@@ -2,12 +2,12 @@
 
 ## Overview
 
-Traefik v3.6 is the ingress controller, installed via Helm in `kube-system`. It routes external traffic from MetalLB's LoadBalancer IP to internal Kubernetes services based on host and path rules. All current traffic flows over HTTP — TLS termination has not been enabled yet.
+Traefik v3.6 is the ingress controller, installed via Helm in `kube-system`. It routes external traffic from MetalLB's LoadBalancer IP to internal Kubernetes services based on host and path rules. All current traffic flows through Cloudeflare Tunnel to use TLS termination.
 
 ## Traffic Flow
 
 ```
-Internet → OPNsense (NAT) → MetalLB IP (10.10.x.100)
+Internet → Router → Switch → OPNsense (NAT) → MetalLB IP (10.10.x.100)
     → Traefik Ingress Controller (DaemonSet on all nodes)
         ├── jdools.com           → landing-page service
         ├── mock-trading.jdools.com  → mock-trading service
@@ -29,14 +29,7 @@ Internet → OPNsense (NAT) → MetalLB IP (10.10.x.100)
 | `aoa-marching-cubes.jdools.com` | `/` | aoa-marching-cubes | 80 |
 | `*.jdools.com` (wildcard) | `/` | dynamic-404 | 80 (catch-all) |
 
-## TLS Status
-
-Not configured. All services are exposed over plain HTTP via the Traefik `web` entrypoint (port 80).
 
 ## Service Discovery
 
 Traefik discovers services automatically via Kubernetes CRDs (Ingress, IngressClass). Services are exposed internally as ClusterIP on their respective ports. Traefik uses readiness probe results to determine healthy endpoints.
-
----
-
-*Ingress configuration documentation. Specific internal IPs have been generalized.*
