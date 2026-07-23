@@ -1,4 +1,4 @@
-# Websites Documentation
+<img width="846" height="703" alt="image" src="https://github.com/user-attachments/assets/b851ba63-bdbc-405e-9293-2858af4c6d7a" /># Websites Documentation
 
 This directory contains documentation and assets for all websites hosted on the homelab infrastructure. Each website has its own subdirectory with relevant files and deployment information.
 
@@ -19,7 +19,7 @@ This directory contains documentation and assets for all websites hosted on the 
 All websites are hosted on the k3s Kubernetes cluster:
 
 ```
-Internet → OPNsense (NAT) → MetalLB IP → Traefik Ingress → Service → Pod
+Internet → Router → Switch → OPNsense (NAT) → MetalLB IP → Traefik Ingress → Service → Pod
                                                          │
                                                          ├── jdools.com → landing-page pod (ConfigMap volume)
                                                          └── mock-trading.jdools.com → mock-trading pod (NGINX serving Expo build)
