@@ -55,9 +55,9 @@ Lists all service URLs with last modification dates and priority rankings. Updat
 ```
 ┌─────────────────────────────────────────────────────┐
 │  Kubernetes ConfigMap (landing-page-html)           │
-│  ├── index.html (main page)                        │
-│  ├── sitemap.xml                                   │
-│  └── robots.txt                                    │
+│  ├── index.html (main page)                         │
+│  ├── sitemap.xml                                    │
+│  └── robots.txt                                     │
 └──────────────────────┬──────────────────────────────┘
                        │ mounted as volume
                        ▼
@@ -72,7 +72,3 @@ Lists all service URLs with last modification dates and priority rankings. Updat
 │  Traefik Ingress → jdools.com                       │
 └─────────────────────────────────────────────────────┘
 ```
-
----
-
-*Website assets directory. The main HTML source is stored in Kubernetes ConfigMap and not committed to this repository.*
