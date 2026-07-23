@@ -30,7 +30,3 @@ The homelab uses a small set of namespaces to organize cluster resources. Since 
 
 - **No Network Policies**: All pods can communicate across namespaces freely
 - **No Resource Quotas**: No CPU/memory limits per namespace
-
----
-
-*Namespace documentation. Specific resource counts have been generalized.*
