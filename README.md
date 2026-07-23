@@ -77,4 +77,3 @@ This repository documents the homelab infrastructure: a Proxmox VE host running 
 - **[kubernetes/](./kubernetes/)** - Kubernetes cluster architecture and manifests
 - **[services/](./services/)** - Detailed service documentation
 - **[websites/](./websites/)** - Website assets and deployment docs
-- **[references/](./references/)** - DNS, SSL, security, and changelog
