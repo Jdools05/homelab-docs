@@ -21,7 +21,7 @@ User → power-playlist.jdools.com
 | **Hosting** | Kubernetes (k3s) | Container orchestration |
 | **Web Server** | NGINX (for Next.js static export) or custom | Static file serving / reverse proxy |
 | **Authentication** | Spotify OAuth 2.0 | User authentication via Spotify accounts |
-| **Database** | PostgreSQL (Supabase or self-hosted) | Store user playlists and preferences |
+| **Database** | PostgreSQL (self-hosted) | Store user playlists and preferences |
 
 ## Spotify Integration
 
@@ -48,7 +48,3 @@ Users authenticate via Spotify OAuth 2.0 — click "Login with Spotify," grant p
 | `users` | Spotify user profiles | spotify_id, username, access_token (encrypted), refresh_token (encrypted) |
 | `playlists` | User playlists | id, user_id, spotify_playlist_id, name, description, public |
 | `playlist_tracks` | Tracks in playlists | playlist_id, position, track_uri, added_at |
-
----
-
-*Service documentation. Specific API endpoints and database credentials have been generalized.*
