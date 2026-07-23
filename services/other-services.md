@@ -47,21 +47,3 @@ Comprehensive monitoring solution with these components:
 - **kube-state-metrics** — Kubernetes object state as Prometheus metrics
 
 All services are internal-only (ClusterIP). Prometheus provides a built-in PromQL query interface for ad-hoc data exploration.
-
-## Nextcloud VM (105)
-
-Personal cloud storage and file sharing service running on Proxmox VM 105. Uses Ubuntu/Debian with Nextcloud latest stable, PostgreSQL/MariaDB internally, and ~1 TB of storage. Internal network only — not exposed externally by default.
-
-## Archived VMs (Stopped)
-
-| VM | Purpose | Status |
-|----|---------|--------|
-| 100 (mceternal) | Minecraft server (MC Eternal modpack, 32 GB RAM) | Stopped — archived |
-| 104 (dev) | Development environment (16 GB RAM, 512 GB disk) | Stopped — archived |
-| 125 (docker) | Docker host for non-K8s workloads (8 GB RAM, 64 GB disk) | Stopped — archived |
-
-These VMs are no longer actively maintained. Their storage allocations remain on the MainThin pool but can be reclaimed if needed.
-
----
-
-*Other services documentation. Specific internal configurations and access details have been generalized.*
