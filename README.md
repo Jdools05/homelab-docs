@@ -69,7 +69,7 @@ This repository documents the homelab infrastructure: a Proxmox VE host running 
 | **Landing Page** | jdools.com | Static HTML/NGINX | Portfolio site with aurora UI |
 | **Mock Trading** | mock-trading.jdools.com | React Native, Supabase, Finnhub API | Paper trading app with real-time quotes |
 | **Power Playlist** | power-playlist.jdools.com | Node.js API + Next.js Web | Spotify playlist management |
-| **AOA Marching Cubes** | aoa-marching-cubes.jdools.com | Java 3D Visualization | 3D surface visualization tool |
+| **AOA Marching Cubes** | aoa-marching-cubes.jdools.com | Three.js 3D Visualization | 3D surface visualization tool |
 
 ## Documentation Structure
 
