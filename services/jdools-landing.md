@@ -34,7 +34,3 @@ Traefik Ingress → jdools.com
 - Animated aurora background (CSS gradients + keyframe animations)
 - Responsive layout for desktop and mobile
 - Service cards linking to Mock Trading, Power Playlist, and AOA Marching Cubes
-
----
-
-*Service documentation. Specific internal configurations have been generalized.*
