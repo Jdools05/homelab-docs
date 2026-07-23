@@ -28,14 +28,5 @@ Backups cover three layers: Proxmox VM images, Kubernetes cluster state (etcd), 
 |----------|-------------|
 | Single VM failure | Restore from latest vzdump backup |
 | Storage pool issue | Replace disk(s), recreate LVM, restore VMs from backup drive |
-| Complete host failure | Install Proxmox on new hardware, mount backup drive, restore OPNsense → K8s control plane → workers (dependency order) |
 | Kubernetes corruption | Restore etcd snapshot, rejoin worker nodes if needed |
 
-## Monitoring Backup Health
-
-- **List recent backups**: `pvebackup list local-backup --sort -start`
-- **Check backup storage usage**: `df -h /mnt/pve/backups`
-
----
-
-*Backup strategy documentation. Actual schedules and retention policies reflect current operational settings.*
