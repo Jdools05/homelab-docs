@@ -2,7 +2,7 @@
 
 ## Overview
 
-This directory documents the web build of the Mock Trading mobile application. The web version is built using Expo and served via NGINX from a Kubernetes Deployment. The source code for the full React Native app (including mobile-specific components) is maintained in `D:\Projects\mock-trading-mobile`.
+This directory documents the web build of the Mock Trading mobile application. The web version is built using Expo and served via NGINX from a Kubernetes Deployment. The source code for the full React Native app (including mobile-specific components) is maintained in a private repository.
 
 ## Build & Serving Architecture
 
@@ -71,7 +71,3 @@ These are embedded at build time and cannot be changed without rebuilding the Do
 - **Endpoint**: `GET /health`
 - **Response**: 200 OK with body "OK"
 - **Purpose**: Ensures NGINX is serving before routing traffic
-
----
-
-*Web build documentation. Specific Supabase credentials and internal deployment details have been generalized for public viewing.*
