@@ -16,23 +16,23 @@ This repository documents the homelab infrastructure: a Proxmox VE host running 
 │  └──────────────────┘        └──────────────────────────┘   │
 │                              └──────────────────────────┘   │
 │                                                             │
-│  ┌─────────────────────────────────────────────────────┐   │
+│  ┌──────────────────────────────────────────────────────┐   │
 │  │              Proxmox VE Host                         │   │
 │  │                                                      │   │
-│  │  CPU: Intel Xeon E5-2667 v3 (Dual, 16 cores)        │   │
+│  │  CPU: Intel Xeon E5-2667 v3 (Dual, 16 cores)         │   │
 │  │  RAM: 128 GB DDR4                                    │   │
 │  │  Storage: 30TB LVM Thin Pool                         │   │
-│  │  Network: 4x 1GbE Bonded (LACP) → vmbr0 bridge      │   │
-│  └─────────────────────────────────────────────────────┘   │
+│  │  Network: 4x 1GbE Bonded (LACP) → vmbr0 bridge       │   │
+│  └──────────────────────────────────────────────────────┘   │
 │                                                             │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐     │
-│  │ OPNsense     │  │ k8s Ctrl-1   │  │ k8s Worker-1 │     │
-│  │ (Firewall)   │  │ (Control)    │  │              │     │
-│  └──────────────┘  └──────────────┘  └──────────────┘     │
-│  ┌──────────────┐  ┌──────────────┐                       │
-│  │ k8s Worker-2 │  │ Nextcloud    │                       │
-│  │              │  │ (Cloud)      │                       │
-│  └──────────────┘  └──────────────┘                       │
+│  ┌──────────────┐   ┌──────────────┐   ┌──────────────┐     │
+│  │ OPNsense     │   │ k8s Ctrl-1   │   │ k8s Worker-1 │     │
+│  │ (Firewall)   │   │ (Control)    │   │              │     │
+│  └──────────────┘   └──────────────┘   └──────────────┘     │
+│  ┌──────────────┐   ┌──────────────┐                        │
+│  │ k8s Worker-2 │   │ Nextcloud    │                        │
+│  │              │   │ (Cloud)      │                        │
+│  └──────────────┘   └──────────────┘                        │
 └─────────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────────┐
@@ -78,7 +78,3 @@ This repository documents the homelab infrastructure: a Proxmox VE host running 
 - **[services/](./services/)** - Detailed service documentation
 - **[websites/](./websites/)** - Website assets and deployment docs
 - **[references/](./references/)** - DNS, SSL, security, and changelog
-
----
-
-*Last updated: 2026-07-22*
