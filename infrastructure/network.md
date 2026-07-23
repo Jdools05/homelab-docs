@@ -6,9 +6,15 @@
 Internet
     │
     ▼
-[OPNsense VM] ← WAN (DHCP from ISP)
+Home Router
     │
-    ├── LAN: 10.10.x.1/16 → k3s cluster network
+    ▼
+TP-Link Switch
+    │
+    ▼ 
+[OPNsense VM] ← WAN via vmbr0 (Treats home LAN as WAN)
+    │
+    ├── LAN: 10.10.x.1/16 → All VM containers
     │     Used for: pod networking, inter-VM communication
     │
     └── vmbr0 bridge on Proxmox host
@@ -27,16 +33,12 @@ The OPNsense VM sits between the ISP and the internal network, handling NAT, rou
 
 ## Firewall Configuration (OPNsense VM)
 
-- **WAN**: DHCP from ISP
+- **WAN**: DHCP from home router
 - **LAN**: `10.10.x.1/16` on `vmbr1` bridge
 - **NAT**: Masquerade for all internal subnets via WAN
 - **Default policy**: Allow outbound, deny inbound (with explicit port forwards as needed)
 
 ## DNS
 
-- **External**: Managed at the domain registrar (A/CNAME records pointing to public IP or CDN)
+- **External**: Cloudflare domain records (A/CNAME records pointing to public IP)
 - **Internal**: Kubernetes CoreDNS handles in-cluster service discovery (`<service>.<namespace>.svc.cluster.local`)
-
----
-
-*Network documentation. Specific IPs and hostnames have been generalized for public viewing.*
