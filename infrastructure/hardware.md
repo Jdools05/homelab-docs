@@ -11,13 +11,13 @@
 | **VM Storage** | 30 TB LVM Thin Pool (`/dev/sdc`) — hosts all VM disk images |
 | **Network** | 4x Intel Ethernet NICs bonded via LACP → `vmbr0` bridge |
 
-The host runs as a rack-mount server with redundant PSUs and dedicated iDRAC for remote management.
+The host runs as a rack-mount server with A/B redundant PSUs and dedicated iDRAC for remote management.
 
 ## Network Switching
 
 - **Switch**: TP-Link T1600G-28TS smart switch
 - 4 ports dedicated to Proxmox (LAG/bond0)
-- Uplink connects to OPNsense firewall VM
+- All internal VMs get routed through OPNsense before going to WAN
 
 ## Networking Hardware Summary
 
