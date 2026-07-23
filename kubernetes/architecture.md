@@ -8,8 +8,8 @@ The homelab runs a k3s cluster (v1.34.5) with 3 nodes: 1 control plane and 2 wor
 
 ```
 ┌─────────────────────────────────────────────────────┐
-│              k3s Cluster (v1.34.5)                   │
-│                                                      │
+│              k3s Cluster (v1.34.5)                  │
+│                                                     │
 │  ┌──────────────────┐    ┌──────────────────┐       │
 │  │ Control Plane    │    │ Worker Node #1   │       │
 │  │ (k8s-control-1)  │    │ (k8s-worker-1)   │       │
@@ -17,13 +17,13 @@ The homelab runs a k3s cluster (v1.34.5) with 3 nodes: 1 control plane and 2 wor
 │  │ - etcd, API srv  │    │ - App pods       │       │
 │  │ - Traefik (LB)   │    │ - Longhorn agent │       │
 │  └──────────────────┘    └──────────────────┘       │
-│                                                      │
-│  ┌──────────────────┐                                │
-│  │ Worker Node #2   │                                │
-│  │ (k8s-worker-2)   │                                │
-│  │ - App pods       │                                │
-│  │ - Longhorn agent │                                │
-│  └──────────────────┘                                │
+│                                                     │
+│  ┌──────────────────┐                               │
+│  │ Worker Node #2   │                               │
+│  │ (k8s-worker-2)   │                               │
+│  │ - App pods       │                               │
+│  │ - Longhorn agent │                               │
+│  └──────────────────┘                               │
 └─────────────────────────────────────────────────────┘
 ```
 
@@ -39,7 +39,7 @@ The homelab runs a k3s cluster (v1.34.5) with 3 nodes: 1 control plane and 2 wor
 
 - **Pod CIDR**: `10.42.0.0/16` (k3s default Flannel CNI)
 - **Service CIDR**: `10.43.0.0/16`
-- **External access flow**: Internet → OPNsense NAT → MetalLB IP (`10.10.x.100`) → Traefik Ingress → Service → Pod
+- **External access flow**: Internet → Router → Switch → OPNsense NAT → MetalLB IP (`10.10.x.100`) → Traefik Ingress → Service → Pod
 
 ## Key Components
 
@@ -62,7 +62,4 @@ The homelab runs a k3s cluster (v1.34.5) with 3 nodes: 1 control plane and 2 wor
 
 - **Current state**: Single control plane node (no etcd HA)
 - **Scaling**: Worker VMs can be added — Longhorn replicates data automatically across nodes
-
----
-
-*Cluster architecture documentation. Specific internal IPs and network ranges have been generalized.*
+- 
