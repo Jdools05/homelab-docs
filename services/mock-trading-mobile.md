@@ -15,9 +15,9 @@ A paper trading application that lets users practice stock trading with virtual 
                        ▼
 ┌─────────────────────────────────────────────────────┐
 │  Backend: Supabase Cloud                            │
-│  ├── PostgreSQL Database                           │
-│  ├── Authentication (email/password)               │
-│  └── Edge Functions (Deno runtime, Finnhub API key)│
+│  ├── PostgreSQL Database                            │
+│  ├── Authentication (email/password)                │
+│  └── Edge Functions (Deno runtime, Finnhub API key) │
 └──────────────────────┬──────────────────────────────┘
                        ▼
 ┌─────────────────────────────────────────────────────┐
@@ -52,7 +52,3 @@ A paper trading application that lets users practice stock trading with virtual 
 | `transactions` | Trade history | user_id, symbol, amount, price, trade_type |
 | `whitelist_stocks` | Approved symbols | symbol (unique) |
 | `stock_requests` | Pending symbol requests | user_id, symbol, name, exchange |
-
----
-
-*Service documentation. Specific API endpoints and database credentials have been generalized.*
