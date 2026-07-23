@@ -5,7 +5,7 @@ This directory contains documentation for the k3s Kubernetes cluster running on 
 ## Contents
 
 - **[architecture.md](./architecture.md)** - Cluster topology, node roles, networking model, and design decisions
-- **[ingress.md](./ingress.md)** - Traefik ingress controller setup, TLS termination, and routing rules
+- **[ingress.md](./ingress.md)** - Traefik ingress controller setup, TLS termination (planned), and routing rules
 - **[namespaces.md](./namespaces.md)** - Namespace layout, purpose, and resource allocation
 - **[persistent-storage.md](./persistent-storage.md)** - Longhorn storage classes, PVCs, and volume management
 - **[manifests/](./manifests/)** - Current Kubernetes resource YAML files (exported from cluster)

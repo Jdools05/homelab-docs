@@ -9,7 +9,7 @@ This directory contains documentation and assets for all websites hosted on the 
   - `robots.txt` - Search engine directives
   - `sitemap.xml` - SEO sitemap
   - `DEPLOY.md` - Deployment documentation
-  - `README.md` - This file's companion with design and architecture details
+  - `README.md` - Design and architecture details
 
 - **[mock-trading.jdools.com/](./mock-trading.jdools.com/)** - Mock Trading web app (Expo build served by NGINX)
   - `README.md` - Build process, Dockerfile structure, deployment pipeline documentation

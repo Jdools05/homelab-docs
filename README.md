@@ -1,6 +1,6 @@
-# Homelab Infrastructure Documentation
+# Homelab Documentation
 
-Welcome to the homelab infrastructure documentation repository. This project documents a self-hosted homelab environment running on Proxmox VE with a Kubernetes (k3s) cluster for containerized services.
+This repository documents the homelab infrastructure: a Proxmox VE host running OPNsense, Kubernetes (k3s), and several hosted services.
 
 ## Architecture Overview
 
@@ -11,43 +11,42 @@ Welcome to the homelab infrastructure documentation repository. This project doc
 │  ┌──────────────────┐        ┌──────────────────────────┐   │
 │  │   Internet/ISP   │        │   Internal Networks      │   │
 │  │                  │        │                          │   │
-│  │   WAN (DHCP)     ├───────►│  Management Network      │   │
-│  │                  │  LAG   │  Kubernetes Cluster      │   │
-│  └──────────────────┘        │  Service Networks        │   │
+│  │   WAN (DHCP)     ├───────►│  OPNsense Firewall VM    │   │
+│  │                  │        │  └─ NAT, routing, FW     │   │
+│  └──────────────────┘        └──────────────────────────┘   │
 │                              └──────────────────────────┘   │
+│                                                             │
+│  ┌─────────────────────────────────────────────────────┐   │
+│  │              Proxmox VE Host                         │   │
+│  │                                                      │   │
+│  │  CPU: Intel Xeon E5-2667 v3 (Dual, 16 cores)        │   │
+│  │  RAM: 128 GB DDR4                                    │   │
+│  │  Storage: 30TB LVM Thin Pool                         │   │
+│  │  Network: 4x 1GbE Bonded (LACP) → vmbr0 bridge      │   │
+│  └─────────────────────────────────────────────────────┘   │
+│                                                             │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐     │
+│  │ OPNsense     │  │ k8s Ctrl-1   │  │ k8s Worker-1 │     │
+│  │ (Firewall)   │  │ (Control)    │  │              │     │
+│  └──────────────┘  └──────────────┘  └──────────────┘     │
+│  ┌──────────────┐  ┌──────────────┐                       │
+│  │ k8s Worker-2 │  │ Nextcloud    │                       │
+│  │              │  │ (Cloud)      │                       │
+│  └──────────────┘  └──────────────┘                       │
 └─────────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────────┐
-│                    Proxmox VE Host                          │
-│                                                             │
-│  CPU: Intel Xeon E5-2667 v3 (Dual Socket, 16 cores)         │
-│  RAM: 128 GB DDR4                                           │
-│  Storage: 30TB LVM Thin Pool                                │
-│  Network: 4x 1GbE Bonded (LACP)                             │
-│                                                             │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐          │
-│  │ OPNsense    │  │ k8s Ctrl-1  │  │ k8s Worker-1│          │
-│  │ (Firewall)  │  │ (Control)   │  │             │          │
-│  └─────────────┘  └─────────────┘  └─────────────┘          │
-│  ┌─────────────┐  ┌─────────────┐                           │
-│  │ k8s Worker-2│  │ Nextcloud   │                           │
-│  │             │  │ (Cloud)     │                           │
-│  └─────────────┘  └─────────────┘                           │
-└─────────────────────────────────────────────────────────────┘
-
-┌─────────────────────────────────────────────────────────────┐
-│              Kubernetes Cluster (k3s v1.34.5)               │
+│           Kubernetes Cluster (k3s v1.34.5)                  │
 │                                                             │
 │  Node Count: 3 (1 control + 2 workers)                      │
 │  Ingress: Traefik with MetalLB                              │
 │  Storage: Longhorn (distributed block storage)              │
-│  Monitoring: Prometheus Stack                               │
 │                                                             │
 │  Services Exposed via Ingress:                              │
 │  ├── jdools.com              → Landing Page                 │
 │  ├── mock-trading.jdools.com → React Native App (Web)       │
 │  ├── power-playlist.jdools.com → Spotify Integration        │
-│  └── aoa-marching-cubes.jdools.com → Java 3D Visualization  │  
+│  └── aoa-marching-cubes.jdools.com → Java 3D Visualization  │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -80,11 +79,6 @@ Welcome to the homelab infrastructure documentation repository. This project doc
 - **[websites/](./websites/)** - Website assets and deployment docs
 - **[references/](./references/)** - DNS, SSL, security, and changelog
 
-## TODO
-
-- [ ] **VLAN segmentation** — Document and formalize VLAN layout (management, k8s, services) in the network docs
-- [ ] **iSCSI integration** — Get iSCSI working for shared block storage across Proxmox nodes
-
 ---
 
-*Last updated: 2026-07-21*
+*Last updated: 2026-07-22*
