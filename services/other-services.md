@@ -1,9 +1,5 @@
 # Other Services
 
-## Overview
-
-In addition to the primary services (Landing Page, Mock Trading, Power Playlist), the homelab runs several supporting services that provide infrastructure utilities and fallback handling.
-
 ## Service Inventory
 
 | Service | Domain/Path | Technology | Purpose | Status |
@@ -15,45 +11,16 @@ In addition to the primary services (Landing Page, Mock Trading, Power Playlist)
 
 ## Dynamic 404 Handler
 
-### Purpose
-Provides a custom 404 error page for any requests to undefined routes on `*.jdools.com` domains. This ensures consistent user experience and prevents exposure of server information.
+A catch-all Ingress rule (`*.jdools.com`) routes to a Python 3.12 Alpine container that returns a custom 404 page with links back to the main services. Prevents exposure of server information for undefined routes.
 
-### Technology Stack
-- **Runtime**: Python 3.12 Alpine (lightweight container)
-- **Web Server**: Custom Python HTTP server or Flask/FastAPI (minimal framework)
-- **Response**: HTML page with link back to main services
-
-### Deployment
 ```yaml
-# Kubernetes Deployment
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: dynamic-404
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: dynamic-404
-  template:
-    metadata:
-      labels:
-        app: dynamic-404
-    spec:
-      containers:
-        - name: python-404
-          image: python:3.12-alpine
-          ports:
-            - containerPort: 8080
-```
-
-### Ingress Rule (Catch-all)
-```yaml
+# Ingress (catch-all)
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: catchall-404
 spec:
+  ingressClassName: traefik
   rules:
     - host: "*.jdools.com"
       http:
@@ -67,130 +34,34 @@ spec:
                   number: 80
 ```
 
-### Response Format
-Returns HTML page with:
-- Custom 404 error message
-- Link to `jdools.com` (main landing page)
-- List of available services with direct links
-
 ## Longhorn UI
 
-### Purpose
-Web interface for managing Longhorn distributed storage volumes, snapshots, and backups.
-
-### Access
-- **Service**: `longhorn-frontend` (ClusterIP)
-- **Port**: 80/TCP
-- **URL**: Internal only (not exposed externally by default)
-- **Authentication**: None (internal network security)
-
-### Features
-- View all volumes and their replication status
-- Create/delete snapshots for backup
-- Manage backup targets (S3 configuration)
-- Monitor volume health and performance metrics
-- Access engine logs for troubleshooting
-
-### Security Considerations
-- Not exposed to internet (ClusterIP only)
-- No authentication required (relies on network isolation)
-- Recommendation: Add authentication if exposing externally
+Web interface for managing Longhorn volumes, snapshots, and backups. Exposed as a ClusterIP service — not accessible externally by default. Features include volume health monitoring, snapshot creation/deletion, and backup target configuration (S3).
 
 ## Prometheus Stack
 
-### Purpose
-Comprehensive monitoring solution for cluster observability.
+Comprehensive monitoring solution with these components:
+- **Prometheus Server** (port 9090) — metrics collection and query interface (8 GB PVC on Longhorn)
+- **Alertmanager** (port 9093) — alert routing and notification delivery
+- **Node Exporter** (DaemonSet, port 9100) — system-level metrics on all nodes
+- **kube-state-metrics** — Kubernetes object state as Prometheus metrics
 
-### Components
-
-#### Prometheus Server
-- **Port**: 9090/TCP (internal ClusterIP)
-- **Purpose**: Metrics collection, storage, and query interface
-- **Data Retention**: Configured via storage class (8 GB PVC)
-- **Scrape Targets**: All Kubernetes nodes, pods, and custom exporters
-
-#### Alertmanager
-- **Port**: 9093/TCP (internal ClusterIP)
-- **Purpose**: Alert routing and notification delivery
-- **Notifications**: Email, webhook, or other integrations
-
-#### Node Exporter
-- **Type**: DaemonSet (runs on all nodes)
-- **Port**: 9100/TCP (per-node metrics endpoint)
-- **Metrics Collected**: CPU, memory, disk I/O, network traffic
-
-#### kube-state-metrics
-- **Purpose**: Exposes Kubernetes object state as Prometheus metrics
-- **Metrics**: Pod status, deployment replicas, resource usage, etc.
-
-### Query Interface
-Prometheus provides a built-in query interface (PromQL) for ad-hoc data exploration:
-```promql
-# Example queries
-container_memory_usage_bytes{namespace="default"}
-node_cpu_seconds_total{mode="idle"}
-rate(http_requests_total[5m])
-```
+All services are internal-only (ClusterIP). Prometheus provides a built-in PromQL query interface for ad-hoc data exploration.
 
 ## Nextcloud VM (105)
 
-### Purpose
-Personal cloud storage and file sharing service.
+Personal cloud storage and file sharing service running on Proxmox VM 105. Uses Ubuntu/Debian with Nextcloud latest stable, PostgreSQL/MariaDB internally, and ~1 TB of storage. Internal network only — not exposed externally by default.
 
-### Technology Stack
-- **OS**: Ubuntu/Debian (running on Proxmox VM)
-- **Application**: Nextcloud latest stable
-- **Database**: PostgreSQL or MariaDB (internal to VM)
-- **Storage**: 1 TB primary volume + 828 MB system volume
+## Archived VMs (Stopped)
 
-### Access
-- **URL**: Internal network only (not exposed externally by default)
-- **Authentication**: Username/password with optional 2FA
-- **Features**: File sync, calendar, contacts, office suite integration
+| VM | Purpose | Status |
+|----|---------|--------|
+| 100 (mceternal) | Minecraft server (MC Eternal modpack, 32 GB RAM) | Stopped — archived |
+| 104 (dev) | Development environment (16 GB RAM, 512 GB disk) | Stopped — archived |
+| 125 (docker) | Docker host for non-K8s workloads (8 GB RAM, 64 GB disk) | Stopped — archived |
 
-### Security Considerations
-- Not exposed to internet (internal VM only)
-- Recommend: Add reverse proxy with HTTPS if exposing externally
-- Recommend: Enable Two-Factor Authentication for all users
-
-## MC Eternal Modpack Server (100) - Stopped
-
-### Purpose
-Minecraft server running the "MC Eternal" modpack (vanilla+ mod collection).
-
-### Status
-Currently **stopped** (VM 100 power state: off)
-
-### Technology Stack
-- **OS**: Ubuntu/Debian (running on Proxmox VM)
-- **Application**: Minecraft Java Edition with MC Eternal modpack
-- **RAM Allocation**: 32 GB (dedicated to JVM heap)
-- **Disk**: 128 GB (world data + mods)
-
-### Use Case
-- Personal gaming server
-- Multiplayer hosting for friends/family
-- Currently archived (not actively maintained)
-
-## Docker Host VM (125) - Stopped
-
-### Purpose
-Dedicated Docker host for non-Kubernetes workloads.
-
-### Status
-Currently **stopped** (VM 125 power state: off)
-
-### Technology Stack
-- **OS**: Ubuntu/Debian
-- **Application**: Docker Engine + Docker Compose
-- **RAM Allocation**: 8 GB
-- **Disk**: 64 GB
-
-### Use Case
-- Running containers that don't need Kubernetes orchestration
-- Testing new container images before deploying to K8s
-- Services with complex networking requirements
+These VMs are no longer actively maintained. Their storage allocations remain on the MainThin pool but can be reclaimed if needed.
 
 ---
 
-*Other services documentation. Specific internal configurations and access details have been generalized for public viewing.*
+*Other services documentation. Specific internal configurations and access details have been generalized.*

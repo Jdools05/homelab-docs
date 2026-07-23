@@ -22,32 +22,6 @@ The main `index.html` is **not stored in this repository** because it's served f
 - Service links to Mock Trading, Power Playlist, and AOA Marching Cubes
 - Responsive design for desktop and mobile
 
-### Retrieving Current HTML from Cluster
-
-To view or export the current served HTML:
-
-```bash
-# Get ConfigMap data as YAML
-kubectl get configmap landing-page-html -o yaml
-
-# Extract just the index.html content (requires parsing)
-kubectl get configmap landing-page-html -o jsonpath='{.data.index\.html}' > current-index.html
-```
-
-### Updating the Landing Page
-
-1. Edit `index.html` in local development environment
-2. Update the ConfigMap:
-   ```bash
-   kubectl create configmap landing-page-html \
-     --from-file=index.html=./index.html \
-     --from-file=sitemap.xml=./sitemap-template.xml \
-     --from-file=robots.txt=./robots-template.txt \
-     -o yaml --dry-run=client | kubectl apply -f -
-   ```
-3. NGINX pod automatically picks up new files (ConfigMap volume mount)
-4. No redeployment required
-
 ## Design Features
 
 ### Visual Style
@@ -79,31 +53,25 @@ Lists all service URLs with last modification dates and priority rankings. Updat
 ## Deployment Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│  Kubernetes ConfigMap (landing-page-html)                   │
-│  ├── index.html (main page)                                │
-│  ├── sitemap.xml                                           │
-│  └── robots.txt                                            │
-└────────────────────────┬────────────────────────────────────┘
-                         │ mounted as volume
-                         ▼
-┌─────────────────────────────────────────────────────────────┐
-│  NGINX Pod (nginx:alpine)                                  │
-│  - Serves static files from ConfigMap                       │
-│  - Port 80/TCP                                              │
-└────────────────────────┬────────────────────────────────────┘
-                         │ ClusterIP service
-                         ▼
-┌─────────────────────────────────────────────────────────────┐
-│  Traefik Ingress → jdools.com                              │
-└─────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────┐
+│  Kubernetes ConfigMap (landing-page-html)           │
+│  ├── index.html (main page)                        │
+│  ├── sitemap.xml                                   │
+│  └── robots.txt                                    │
+└──────────────────────┬──────────────────────────────┘
+                       │ mounted as volume
+                       ▼
+┌─────────────────────────────────────────────────────┐
+│  NGINX Pod (nginx:alpine)                           │
+│  - Serves static files from ConfigMap               │
+│  - Port 80/TCP                                      │
+└──────────────────────┬──────────────────────────────┘
+                       │ ClusterIP service
+                       ▼
+┌─────────────────────────────────────────────────────┐
+│  Traefik Ingress → jdools.com                       │
+└─────────────────────────────────────────────────────┘
 ```
-
-## Maintenance Notes
-
-- **Favicon**: Binary file, not human-editable. Update by replacing `favicon.ico` in this directory and redeploying if needed.
-- **Content Updates**: Edit HTML directly or update ConfigMap via kubectl commands shown above.
-- **Testing**: Use Playwright scripts in `D:\Projects\landing-page\k8s\test_pp.js` for visual regression testing.
 
 ---
 

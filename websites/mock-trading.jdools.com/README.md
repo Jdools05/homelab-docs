@@ -4,55 +4,18 @@
 
 This directory documents the web build of the Mock Trading mobile application. The web version is built using Expo and served via NGINX from a Kubernetes Deployment. The source code for the full React Native app (including mobile-specific components) is maintained in `D:\Projects\mock-trading-mobile`.
 
-## Web Build Process
+## Build & Serving Architecture
 
-### Build Pipeline
-1. **Source Code**: React Native app with Expo SDK 56
-2. **Build Command**: `npx expo export --platform web --output-dir web-build`
-3. **Output**: Static HTML/CSS/JS in `web-build/` directory
-4. **Docker Image**: Multi-stage build using Node.js 20 (builder) + NGINX (runtime)
+The web version uses a multi-stage Docker pipeline:
+1. Node.js 20 Alpine builds the Expo web app (`npx expo export --platform web`)
+2. NGINX serves the static assets from a second stage image
+3. Image pushed to Docker Hub, then deployed to Kubernetes with Traefik ingress
 
-### Dockerfile.build Structure
-```dockerfile
-# Stage 1: Build web assets with Expo
-FROM node:20-alpine AS builder
-ARG EXPO_PUBLIC_SUPABASE_URL
-ARG EXPO_PUBLIC_SUPABASE_ANON_KEY
-ENV EXPO_PUBLIC_SUPABASE_URL=${EXPO_PUBLIC_SUPABASE_URL}
-ENV EXPO_PUBLIC_SUPABASE_ANON_KEY=${EXPO_PUBLIC_SUPABASE_ANON_KEY}
-RUN npm ci --silent || npm install --silent
-COPY . .
-RUN npx expo export --platform web --output-dir web-build
+### NGINX Configuration
 
-# Stage 2: Serve with NGINX
-FROM nginx:stable-alpine
-RUN rm -rf /usr/share/nginx/html/*
-COPY k8s/nginx/default.conf /etc/nginx/conf.d/default.conf
-COPY --from=builder /app/web-build/ /usr/share/nginx/html/
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
-```
-
-### NGINX Configuration (`k8s/nginx/default.conf`)
-```nginx
-server {
-    listen 80;
-    server_name _;
-    root /usr/share/nginx/html;
-    index index.html;
-
-    # Serve static assets; fallback to index.html for SPA routing
-    location / {
-        try_files $uri $uri/ /index.html;
-    }
-
-    # Health check endpoint for k8s probes
-    location = /health {
-        return 200 'OK';
-        add_header Content-Type text/plain;
-    }
-}
-```
+- Serves static assets from the built `web-build/` directory
+- SPA routing fallback: all paths resolve to `index.html` (`try_files $uri $uri/ /index.html`)
+- Health check endpoint at `/health` returning 200 OK for k8s readiness probes
 
 ## Kubernetes Deployment
 
@@ -102,51 +65,12 @@ The build process requires two environment variables passed via Docker build arg
 
 These are embedded at build time and cannot be changed without rebuilding the Docker image.
 
-## Build & Deploy Script (`build-and-deploy.sh`)
-
-Located in `D:\Projects\mock-trading-mobile\build-and-deploy.sh`, this script automates:
-1. Loading environment variables from `.env` or ConfigMap
-2. Building Docker image with Supabase credentials as build args
-3. Pushing to Docker Hub (`jdools05/mock-trading:<git-sha>`)
-4. Applying Kubernetes manifests (with image tag substituted)
-5. Rolling out the new deployment
-6. Waiting for rollout completion
-
-### Usage
-```bash
-# Set required environment variables
-export DOCKERHUB_USERNAME=jdools05
-export EXPO_PUBLIC_SUPABASE_URL=https://<project>.supabase.co
-export EXPO_PUBLIC_SUPABASE_ANON_KEY=<key>
-
-# Run build and deploy
-chmod +x build-and-deploy.sh
-./build-and-deploy.sh
-```
-
 ## Monitoring & Health Checks
 
 ### Readiness Probe
 - **Endpoint**: `GET /health`
 - **Response**: 200 OK with body "OK"
 - **Purpose**: Ensures NGINX is serving before routing traffic
-
-### Liveness Probe
-- **Endpoint**: `GET /health`
-- **Response**: 200 OK with body "OK"
-- **Interval**: Every 20 seconds
-
-## Troubleshooting
-
-### Build Failures
-- Check Supabase credentials are valid and not expired
-- Verify network connectivity to Expo CDN during build
-- Review Docker build logs for dependency installation errors
-
-### Runtime Issues
-- Check NGINX logs: `kubectl logs -f <pod-name>`
-- Verify Supabase URL/KEY are correctly embedded in image
-- Test `/health` endpoint directly: `curl http://<service-ip>/health`
 
 ---
 
