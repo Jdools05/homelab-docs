@@ -26,3 +26,6 @@ _raw-data/
 
 # AI markdowns
 CLAUDE.md
+
+# Local reference docs (not for git)
+deploy-commands.md
