@@ -1,4 +1,4 @@
-<img width="846" height="703" alt="image" src="https://github.com/user-attachments/assets/b851ba63-bdbc-405e-9293-2858af4c6d7a" /># Websites Documentation
+# Websites Documentation
 
 This directory contains documentation and assets for all websites hosted on the homelab infrastructure. Each website has its own subdirectory with relevant files and deployment information.
 
