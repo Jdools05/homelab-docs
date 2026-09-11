@@ -9,9 +9,11 @@ This directory contains assets and documentation for the JDools landing page hos
 | File | Description |
 |------|-------------|
 | `favicon.ico` | Site favicon (binary) |
-| `robots.txt` | Search engine directives |
-| `sitemap.xml` | SEO sitemap listing all services |
-| `DEPLOY.md` | Deployment documentation for K8s ConfigMap updates |
+| `robots.txt` | Search engine directives (served at the edge, not the ConfigMap — see [DEPLOY.md](./DEPLOY.md)) |
+| `sitemap.xml` | SEO sitemap listing all services (not yet deployed — currently returns 404) |
+| `DEPLOY.md` | Deployment documentation for the landing page ConfigMap and edge assets |
+| `dist/index.html` | Source for the landing page (deployed via ConfigMap) |
+| `dist/privacy-policy.html` | Source for the privacy policy page (deployed via ConfigMap) |
 
 ## HTML Source
 

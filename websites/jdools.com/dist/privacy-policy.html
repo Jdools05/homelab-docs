@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Privacy Policy - jdools.com</title>
+      <style>
+         :root {
+            --primary: #6366f1;
+            --bg-dark: #0f172a;
+            --glass: rgba(255, 255, 255, 0.05);
+         }
+         * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+         }
+         body {
+            font-family:
+               "Inter",
+               -apple-system,
+               system-ui,
+               sans-serif;
+            background: var(--bg-dark);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+         }
+         .aurora {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            background: radial-gradient(
+                  circle at 20% 20%,
+                  #4338ca 0%,
+                  transparent 40%
+               ),
+               radial-gradient(circle at 80% 80%, #9333ea 0%, transparent 40%),
+               radial-gradient(circle at 50% 50%, #0f172a 0%, transparent 100%);
+            filter: blur(100px);
+            animation: aurora-flow 20s ease-in-out infinite alternate;
+         }
+         @keyframes aurora-flow {
+            0% {
+               transform: scale(1) translate(0, 0);
+            }
+            100% {
+               transform: scale(1.1) translate(20px, 20px);
+            }
+         }
+         .card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 3rem;
+            border-radius: 2rem;
+            max-width: 720px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+         }
+         h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(to bottom right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+         }
+         .updated {
+            color: #64748b;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+         }
+         .content h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #e2e8f0;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+         }
+         .content p,
+         .content li {
+            color: #cbd5e1;
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 0.75rem;
+         }
+         .content ul {
+            list-style: disc;
+            margin-left: 1.5rem;
+            margin-bottom: 0.75rem;
+         }
+         .back {
+            display: inline-block;
+            margin-top: 2.5rem;
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+         }
+         .back:hover {
+            color: white;
+         }
+      </style>
+   </head>
+   <body>
+      <div class="aurora"></div>
+      <div class="card">
+         <h1>Privacy Policy</h1>
+         <div class="updated">Last updated: July 6, 2026</div>
+         <div class="content">
+            <p>
+               This privacy policy explains how the website hosted at
+               <strong>jdools.com</strong> (the "Site") is operated. The Site
+               is a static portfolio showcasing personal projects, owned and
+               maintained by Jordan Dooley.
+            </p>
+
+            <h2>Information Collection</h2>
+            <p>
+               The Site is a static website. We do not collect, store, or
+               process any personal information from visitors. There is no
+               registration, no contact forms, no user accounts, and no
+               newsletter subscription on the Site.
+            </p>
+
+            <h2>Cookies and Tracking</h2>
+            <p>
+               The Site does not use cookies, pixel tags, or any third-party
+               analytics or tracking scripts. No profiling occurs and no data
+               is sold or shared with external parties.
+            </p>
+
+            <h2>Third-Party Links</h2>
+            <p>
+               The Site contains links to other websites and external services
+               (including social media platforms such as LinkedIn and GitHub,
+               and hosted applications). Clicking those links redirects you to
+               third-party sites that have their own privacy policies. We are
+               not responsible for the privacy practices or content of those
+               external sites.
+            </p>
+
+            <h2>Embedded Content</h2>
+            <p>
+               Any embedded content (such as images or media) behaves the same
+               way as if the visitor had visited the third-party website that
+               provided the content. Third-party hosts may collect data, use
+               cookies, embed additional media, and monitor your interaction
+               with that content.
+            </p>
+
+            <h2>Data Security</h2>
+            <p>
+               Because no personal data is collected, there is no data to
+               secure. The Site is served over HTTPS to protect the integrity
+               of the content delivered to visitors.
+            </p>
+
+            <h2>Changes to This Policy</h2>
+            <p>
+               We may update this privacy policy from time to time. Any
+               changes will be reflected by updating the "Last updated" date
+               at the top of this page.
+            </p>
+
+            <h2>Contact</h2>
+            <p>
+               If you have any questions about this privacy policy, you can
+               reach the site operator through the links on the main page.
+            </p>
+
+            <a href="index.html" class="back">&larr; Back to jdools.com</a>
+         </div>
+      </div>
+   </body>
+</html>
