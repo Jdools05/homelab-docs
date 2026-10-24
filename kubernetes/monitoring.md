@@ -81,6 +81,12 @@ MSYS2 rewrite.
 Prometheus, Alertmanager, and Grafana all expose services inside the cluster.
 External access is via Ingress → Traefik → pod, on the MetalLB IP (`10.10.30.100`).
 
+For devices on the tailnet, Grafana and Prometheus are also exposed directly over
+the tailnet via the Tailscale Kubernetes operator — see
+[tailscale-operator.md](./tailscale-operator.md). That route uses MagicDNS names
+(`monitoring-prometheus-stack-grafana.taile4e2f7.ts.net`) and requires no ingress
+or TLS; it only works from devices already on the tailnet.
+
 ### Grafana (dashboards)
 
 - **External**: `http://grafana.jdools.com` (Ingress `prometheus-stack-grafana`)
@@ -104,7 +110,8 @@ Prometheus data source already defined in the
 
 ### Prometheus (queries, targets, rules)
 
-- **External**: not exposed (no Ingress) — use a port-forward:
+- **Tailnet**: `monitoring-prometheus-stack-kube-prom-prometheus.taile4e2f7.ts.net` (see [tailscale-operator.md](./tailscale-operator.md))
+- **Local port-forward**:
 
 ```bash
 kubectl -n monitoring port-forward svc/prometheus-operated 9090:9090
