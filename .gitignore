@@ -29,3 +29,6 @@ CLAUDE.md
 
 # Local reference docs (not for git)
 deploy-commands.md
+
+# Local backup of pre-stack monitoring namespace (Helm install replaced it)
+kubernetes/manifests/_bak-monitoring-pre-stack/

@@ -24,7 +24,7 @@ The homelab uses a small set of namespaces to organize cluster resources. Since 
 
 **`metallb-system`** — MetalLB controller (on control plane) and speaker (DaemonSet on all nodes). Handles Layer 2 IP advertisement.
 
-**`monitoring`** — Prometheus server, Alertmanager, Node Exporter (DaemonSet), kube-state-metrics, and Pushgateway for batch job metrics.
+**`monitoring`** — Prometheus stack (Prometheus, Alertmanager, Node Exporter, kube-state-metrics, Pushgateway) and Grafana. See [monitoring.md](./monitoring.md).
 
 ## Current State
 

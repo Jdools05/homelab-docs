@@ -7,6 +7,7 @@ This directory contains documentation for the k3s Kubernetes cluster running on 
 - **[architecture.md](./architecture.md)** - Cluster topology, node roles, networking model, and design decisions
 - **[ingress.md](./ingress.md)** - Traefik ingress controller setup, TLS termination (planned), and routing rules
 - **[namespaces.md](./namespaces.md)** - Namespace layout, purpose, and resource allocation
+- **[monitoring.md](./monitoring.md)** - Prometheus + Grafana stack: install, access, and Helm management
 - **[persistent-storage.md](./persistent-storage.md)** - Longhorn storage classes, PVCs, and volume management
 - **[manifests/](./manifests/)** - Current Kubernetes resource YAML files (exported from cluster)
 
@@ -21,7 +22,7 @@ This directory contains documentation for the k3s Kubernetes cluster running on 
 | **Ingress Controller** | Traefik v3.6 |
 | **Load Balancer** | MetalLB (Layer 2 mode) |
 | **Storage** | Longhorn v1.7 (distributed block storage) |
-| **Monitoring** | Prometheus Stack (Prometheus, Alertmanager, Node Exporter) |
+| **Monitoring** | Prometheus Stack (Prometheus, Alertmanager, Node Exporter, Grafana) |
 
 ## Service Exposure
 
