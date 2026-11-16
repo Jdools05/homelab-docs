@@ -3,6 +3,7 @@
    <head>
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <meta name="description" content="Portfolio by Jordan Dooley: Mock Trading, Power Playlist, and AOA Marching Cubes." />
       <title>jdools.com - Available Services</title>
       <style>
          :root {
@@ -115,7 +116,7 @@
          }
          .footer {
             margin-top: 2.5rem;
-            color: #64748b;
+            color: #94a3b8;
             font-size: 0.875rem;
             display: flex;
             flex-direction: column;
@@ -123,11 +124,12 @@
             gap: 0.5rem;
          }
          .footer a {
-            color: #64748b;
+            color: #94a3b8;
             text-decoration: none;
             transition: color 0.2s;
          }
-         .footer a:hover {
+         .footer a:hover,
+         .footer a:focus-visible {
             color: white;
          }
 
@@ -153,11 +155,47 @@
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.08);
          }
-         .contact a:hover {
+         .contact a:hover,
+         .contact a:focus-visible {
             color: white;
             background: rgba(255, 255, 255, 0.1);
             border-color: var(--primary);
             transform: translateY(-2px);
+         }
+
+         /* Visible keyboard focus for all interactive elements (WCAG 2.4.7) */
+         :focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+         }
+         a:focus:not(:focus-visible) {
+            outline: none;
+         }
+
+         /* Skip link — keyboard users can bypass the nav (WCAG 2.4.1) */
+         .skip-link {
+            position: absolute;
+            top: -48px;
+            left: 0;
+            background: var(--primary);
+            color: white;
+            padding: 0.5rem 1rem;
+            z-index: 100;
+            border-radius: 0 0 0.5rem 0;
+            transition: top 0.2s;
+         }
+         .skip-link:focus {
+            top: 0;
+         }
+
+         /* Respect users who prefer reduced motion (WCAG 2.3.3) */
+         @media (prefers-reduced-motion: reduce) {
+            .aurora { animation: none; }
+            .service-item,
+            .contact a {
+               transition: none;
+               transform: none;
+            }
          }
          .contact svg {
             width: 18px;
@@ -167,8 +205,9 @@
       </style>
    </head>
    <body>
+      <a href="#main-content" class="skip-link">Skip to content</a>
       <div class="aurora"></div>
-      <div class="card">
+      <div class="card" id="main-content">
          <h1>JDools Services</h1>
          <div class="service-list">
             <a href="https://power-playlist.jdools.com" class="service-item">
